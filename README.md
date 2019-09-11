@@ -1,2 +1,5 @@
-# weather_forecast
-Location Address based weather forecast pip package. 
+# weather_forecast :open_umbrella: 
+
+
+
+The pip package provides weather forecasting information based on location or address. Using address, the weather_forecast provides location specific forecast. Currently only one function is included i.e forecast. 
