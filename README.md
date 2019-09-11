@@ -11,13 +11,13 @@ The pip package provides weather forecasting information based on location or ad
 
 1. Default date and time. 
 ```
-import weather_forecast
-print(forecast(place = "Bangalore"))
+import weather_forecast as wf
+print(wf.forecast(place = "Bangalore"))
 ```
 
 
 2. Custome date, time and location
 ```
-import weather_forecast
-print(forecast(place = "Bangalore" , time="23:15:00" , date="12-09-2019" , forecast= "daily"))
+import weather_forecast as wf
+print(wf.forecast(place = "Bangalore" , time="23:15:00" , date="12-09-2019" , forecast= "daily"))
 ```
