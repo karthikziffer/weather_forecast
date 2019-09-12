@@ -10,6 +10,9 @@ The pip package provides weather forecasting information based on location or ad
 ```
 pip install weather_forecast
 ```
+
+### Code Usage :video_game:
+```
 wf.forecast(place = "Bangalore" , time="23:15:00" , date="2019-09-12" , forecast
 ```
 
