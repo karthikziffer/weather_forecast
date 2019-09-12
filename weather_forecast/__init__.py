@@ -2,7 +2,6 @@ import requests
 from pprint import pprint
 from datetime import datetime
 from geopy.geocoders import Nominatim
-from collections import OrderedDict
 
 
 def forecast(place, time=None, date=None, forecast=None):
@@ -16,7 +15,7 @@ def forecast(place, time=None, date=None, forecast=None):
         if forecast == None:
             forecast == "daily"
     except Exception as e:
-        return("Exception occured with parameters format")
+        return("Exception occured with parameters format. Follow the format: Date (Y-m-d) and Time (H:M:S)")
 
     try:
         # convert place to lat and long
@@ -41,6 +40,11 @@ def forecast(place, time=None, date=None, forecast=None):
         dates_list = [_.split("T0")[0] for _ in dates_time_list]
         # today's date index
         date_index = dates_list.index(date)
+    except Exception as e:
+        print("Please check the date format. [Y-m-d]")
+
+
+    try:    
         # day
         temperature_day = response_data["vt1dailyForecast"][
             "day"]["temperature"][date_index]
@@ -52,6 +56,11 @@ def forecast(place, time=None, date=None, forecast=None):
             "day"]["windSpeed"][date_index]
         humidity_day = response_data["vt1dailyForecast"][
             "day"]["humidityPct"][date_index]
+        phrases_day = response_data["vt1dailyForecast"][
+            "day"]["phrase"][date_index] 
+        narrative_day = response_data["vt1dailyForecast"][
+            "day"]["narrative"][date_index]
+                    
         # night
         temperature_night = response_data["vt1dailyForecast"][
             "night"]["temperature"][date_index]
@@ -63,8 +72,13 @@ def forecast(place, time=None, date=None, forecast=None):
             "night"]["windSpeed"][date_index]
         humidity_night = response_data["vt1dailyForecast"][
             "night"]["humidityPct"][date_index]
+        phrases_night = response_data["vt1dailyForecast"][
+            "night"]["phrase"][date_index] 
+        narrative_night = response_data["vt1dailyForecast"][
+            "night"]["narrative"][date_index]    
+                       
 
-        forecast_output = OrderedDict()
+        forecast_output = {}
         forecast_output["place"] = place
         forecast_output["time"] = time
         forecast_output["date"] = date
@@ -72,18 +86,23 @@ def forecast(place, time=None, date=None, forecast=None):
                                   "precipitate": precipitate_day,
                                   "uv_description": uv_description_day,
                                   "wind_speed": wind_speed_day,
-                                  "humidity": humidity_day
+                                  "humidity": humidity_day,
+                                  "phrases": phrases_day,
+                                  "narrative":narrative_day
+
                                   }
 
         forecast_output["night"] = {	"temperature": temperature_night,
                                      "precipitate": precipitate_night,
                                      "uv_description": uv_description_night,
                                      "wind_speed": wind_speed_night,
-                                     "humidity": humidity_night
+                                     "humidity": humidity_night,
+                                     "phrases": phrases_night,
+                                     "narrative":narrative_night
                                      }
 
     except Exception as e:
-        print("Exception while fetching data")
-        return None
+        return "Exception while fetching data"
+        
 
     return pprint(forecast_output)
